@@ -1,0 +1,15 @@
+var w;
+var worker_blob = new Blob(['var i=0;function timedCount(){i=i+1;postMessage(i);setTimeout("timedCount()",500);}timedCount();']); 
+if(typeof(Worker)!=="undefined")
+  {
+  if(typeof(w)=="undefined")
+  {
+  w=new Worker(window.URL.createObjectURL(worker_blob));
+  }
+  w.onmessage = function (event) {
+    document.title=event.data;
+    };
+  }
+else
+  {
+  document.getElementById("demo").innerHTML="Sorry, your browser does not support Web Workers...";}
